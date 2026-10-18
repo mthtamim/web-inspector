@@ -8,18 +8,30 @@
 <meta property="og:title" content="Web Inspector — Web Page Scraper & Inspector">
 <meta property="og:description" content="যেকোনো static পেজের পুরো HTML, SEO audit, DOM tree, extracted data — এক জায়গায়।">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d1321;--card:#131c2e;--card2:#1a2740;--soft:#0f1728;--text:#e8eef8;--muted:#8b9cb8;--accent:#3b82f6;--accent2:#60a5fa;--ok:#34d399;--warn:#fbbf24;--err:#f87171;--border:#233250;--codebg:#080d18}
-[data-theme="light"]{--bg:#f7f9fc;--card:#ffffff;--card2:#eef2f8;--soft:#eef2f7;--text:#132238;--muted:#5c6d86;--accent:#2563eb;--accent2:#2563eb;--border:#dbe3ee;--codebg:#0b1220}
+:root{--bg:#0d1321;--card:#131c2e;--card2:#1a2740;--soft:#0f1728;--text:#e8eef8;--muted:#8b9cb8;--accent:#3b82f6;--accent2:#60a5fa;--ok:#34d399;--warn:#fbbf24;--err:#f87171;--border:#233250;--codebg:#080d18;--navbg:rgba(13,19,33,.86)}
+[data-theme="light"]{--bg:#f7f9fc;--card:#ffffff;--card2:#eef2f8;--soft:#eef2f7;--text:#132238;--muted:#5c6d86;--accent:#2563eb;--accent2:#2563eb;--border:#dbe3ee;--codebg:#0b1220;--navbg:rgba(247,249,252,.88)}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px}
-nav{border-bottom:1px solid var(--border);background:var(--card)}
+body{margin:0;font-family:'Inter','Hind Siliguri',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px}
+nav{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--border);background:var(--navbg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .nav-in{max-width:980px;margin:auto;padding:11px 16px;display:flex;align-items:center;gap:10px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;flex:1}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16.5px;flex:1;font-family:'Space Grotesk','Hind Siliguri',sans-serif;letter-spacing:-.01em}
+.brand-t{display:flex;flex-direction:column;line-height:1.15}
+.brand-t small{font-family:'Inter','Hind Siliguri',sans-serif;font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.navlink{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500}
+.navlink:hover{color:var(--text)}
+.livepill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--ok);border:1px solid var(--border);border-radius:99px;padding:4px 10px}
+.livepill i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+@media(max-width:600px){.navlink{display:none}}
+.eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
 .logo{background:var(--accent);color:#fff;border-radius:7px;padding:4px 7px;font-family:ui-monospace,monospace;font-size:13px}
 .vpill{font-size:11px;border:1px solid var(--border);color:var(--muted);border-radius:99px;padding:2px 8px;font-weight:500}
 header.hero{max-width:980px;margin:auto;padding:22px 16px 2px}
-header.hero h1{margin:0 0 6px;font-size:21px;font-weight:700}
+header.hero{padding-top:30px}
+header.hero h1{margin:0 0 8px;font-size:clamp(27px,5.4vw,38px);font-weight:700;font-family:'Space Grotesk','Hind Siliguri',sans-serif;letter-spacing:-.02em;line-height:1.16}
 header.hero p{color:var(--muted);font-size:13.5px;line-height:1.65;max-width:660px;margin:0}
 main{max-width:980px;margin:auto;padding:8px 16px 6px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0}
@@ -49,8 +61,8 @@ button:disabled{opacity:.6;cursor:wait}
 .tabs button:hover{color:var(--text);border-color:var(--border)}
 .tabs button.active{color:var(--text);border-bottom-color:var(--accent)}
 .panel{display:none}.panel.active{display:block}
-#sourceArea{width:100%;height:500px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;white-space:pre}
-#sourceHighlight{height:500px;overflow:auto;background:var(--codebg);border:1px solid var(--border);border-radius:8px;padding:12px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;counter-reset:line;color:#dbe7f5}
+#sourceArea{width:100%;height:500px;font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;white-space:pre}
+#sourceHighlight{height:500px;overflow:auto;background:var(--codebg);border:1px solid var(--border);border-radius:8px;padding:12px 0;font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;counter-reset:line;color:#dbe7f5}
 #sourceHighlight .line{display:block;padding:0 14px 0 58px;position:relative;white-space:pre;min-height:1.6em}
 #sourceHighlight .line::before{counter-increment:line;content:counter(line);position:absolute;left:0;width:42px;text-align:right;color:#3d5578;font-size:11px}
 #sourceHighlight .tg{color:#7dd3fc;font-weight:700}#sourceHighlight .at{color:#fbbf24}#sourceHighlight .st{color:#86efac}#sourceHighlight .cm{color:#64748b;font-style:italic}
@@ -66,7 +78,7 @@ details.moreinfo>summary{font-family:inherit;font-size:15px;font-weight:600;padd
 .inspect-btn{background:transparent;border:1px solid var(--border);color:var(--accent2);border-radius:99px;padding:1px 9px;font-size:11px;margin-left:7px;cursor:pointer}
 #nodeDetail{background:var(--codebg);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-all;max-height:300px;overflow:auto;font-family:ui-monospace,monospace;color:#dbe7f5}
 code{background:var(--soft);padding:2px 6px;border-radius:5px;font-size:13px}
-h2{font-size:16px;margin:4px 0 10px}h3{font-size:14.5px;margin:16px 0 6px}
+h2{font-size:16.5px;margin:4px 0 10px;font-family:'Space Grotesk','Hind Siliguri',sans-serif;letter-spacing:-.01em}h3{font-size:14.5px;margin:16px 0 6px;font-family:'Space Grotesk','Hind Siliguri',sans-serif}
 .small{font-size:13px;color:var(--muted);line-height:1.7}
 .check{display:flex;gap:9px;padding:8px;border-bottom:1px solid var(--border);font-size:14px}
 .check small{display:block;color:var(--muted)}
@@ -95,12 +107,16 @@ footer{max-width:980px;margin:auto;padding:16px;color:var(--muted);font-size:12.
 </head>
 <body>
 <nav><div class="nav-in">
-  <div class="brand"><span class="logo">&lt;/&gt;</span> Web Inspector <span class="vpill">v6</span></div>
+  <div class="brand"><span class="logo">&lt;/&gt;</span><span class="brand-t">Web Inspector<small>mthtamim.bond</small></span> <span class="vpill">v7</span></div>
+  <a class="navlink" href="#moreInfo">Features</a>
+  <a class="navlink" href="https://github.com/mthtamim/web-inspector" target="_blank" rel="noopener">GitHub</a>
+  <span class="livepill"><i></i>Live</span>
   <button class="secondary" id="langToggle">EN</button>
   <button class="secondary" id="themeToggle">Light</button>
 </div></nav>
 
 <header class="hero">
+  <div class="eyebrow">Scraper · Inspector · Auditor</div>
   <h1 data-i18n="heroTitle">যেকোনো Static পেজের ভিতরটা দেখুন</h1>
   <p data-i18n="heroSub">পুরো HTML সংগ্রহ, DOM inspection, SEO ও accessibility audit, লিংক-ছবি-টেবিল extraction, site crawl আর দুই পেজের compare — সব এক টুলে, কোনো সার্ভার ছাড়াই।</p>
 </header>
@@ -265,7 +281,7 @@ footer{max-width:980px;margin:auto;padding:16px;color:var(--muted);font-size:12.
 </div>
 </main>
 
-<details class="card moreinfo"><summary>ফিচার ও ব্যবহারবিধি</summary><section class="block">
+<details class="card moreinfo" id="moreInfo"><summary>ফিচার ও ব্যবহারবিধি</summary><section class="block">
   <h2 data-i18n="featTitle">ফিচারসমূহ</h2>
   <div class="fgrid">
     <div class="fcard"><h3 data-i18n="f1t">একাধিক Fetch মাধ্যম</h3><p data-i18n="f1d">Direct, Wayback Machine, proxy ও rendered fallback — একটি আটকালে পরেরটি নিজে থেকে চেষ্টা করে।</p></div>
